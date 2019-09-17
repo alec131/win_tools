@@ -1,0 +1,7 @@
+- name: Change Password
+  win_user:
+    name: "{{ item.user }}"
+    password: "{{ item.password }}"
+    update_password: always
+  when: ansible_ip_addresses[0] == item.ip 
+  with_items: "{{ pwd_list }}"

@@ -1,0 +1,17 @@
+- name: Verify server password for Win12r2
+  win_shell: |
+    echo "server[{{ item.ip }}] is OK!!!"
+  args:
+    executable: cmd.exe
+  when: 
+    - ansible_os_family == "Windows" 
+    - ansible_ip_addresses[0] == item.ip 
+  with_items: "{{ pwd_list }}"
+
+- name: Verify server password for CentOS
+  shell: |
+    echo "server[{{ item.ip }}] is OK!!!"
+  when: 
+    - ansible_os_family == "RedHat"
+    - ansible_eth0.ipv4.address == item.ip 
+  with_items: "{{ pwd_list }}"
